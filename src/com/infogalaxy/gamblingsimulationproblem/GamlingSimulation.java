@@ -18,29 +18,40 @@ public class GamlingSimulation
 		System.out.println(" Bet Per Game = "+BET_PER_GAME);
 		System.out.println(" Winning Stack = "+winStack);
 		System.out.println(" Loose Stack = "+looseStack);
+		System.out.println("*********************************");
 	}
 	
 	public static void gamePlay()
 	{
-		Random random = new Random();
-		int playStatus = random.nextInt(9)%2;
-		System.out.println(" Play Status = "+playStatus);
-		if(playStatus == LOOSE)
+		while(true)
 		{
-			looseStack +=1;
-		}
-		else
-		{
-			winStack +=1;
+			gameStatus();
+			Random random = new Random();
+			int playStatus = random.nextInt(9)%2;
+			System.out.println(" Play Status = "+playStatus);
+			if(playStatus == LOOSE)
+			{
+				looseStack +=1;
+			}
+			else
+			{
+				winStack +=1;
+			}
+			if(winStack == STACK_PER_DAY/2)
+			{
+				break;
+			}
+			if(looseStack == STACK_PER_DAY/2)
+			{
+				break;
+			}
 		}
 	}
 	public static void main(String[] args)
 	{
 		System.out.println(" Welcome to Gambling Simulation Problem Developed by Nikhil Patil ");
-		gameStatus();
+		
 		gamePlay();
-		System.out.println(" ************* ");
-		gameStatus();
 	}
 	
 }
