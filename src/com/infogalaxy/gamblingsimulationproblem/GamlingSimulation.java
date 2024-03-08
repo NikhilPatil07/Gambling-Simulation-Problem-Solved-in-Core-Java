@@ -9,49 +9,56 @@ public class GamlingSimulation
 	private static final int WIN = 1;
 	private static final int LOOSE = 0;
 	
-	private static int winStack = 0;
-	private static int looseStack = 0;
 	
 	public static void gameStatus()
 	{
-		System.out.println(" Stack Available = "+STACK_PER_DAY);
-		System.out.println(" Bet Per Game = "+BET_PER_GAME);
-		System.out.println(" Winning Stack = "+winStack);
-		System.out.println(" Loose Stack = "+looseStack);
-		System.out.println("*********************************");
+//		System.out.println(" Stack Available = "+STACK_PER_DAY);
+//		System.out.println(" Bet Per Game = "+BET_PER_GAME);
+	
 	}
 	
 	public static void gamePlay()
 	{
-		while(true)
+		Random random = new Random();
+		for(int i = 1; i <=20; i++)
 		{
-			gameStatus();
-			Random random = new Random();
-			int playStatus = random.nextInt(9)%2;
-			System.out.println(" Play Status = "+playStatus);
-			if(playStatus == LOOSE)
+			System.out.println(" Day : "+i);
+			int winStack = 0;
+			int looseStack = 0;
+	
+			while(true)
 			{
-				looseStack +=1;
+//				gameStatus();
+				int playStatus = random.nextInt(9)%2;
+//				System.out.println(" Play Status = "+playStatus);
+				if(playStatus == LOOSE)
+				{
+					looseStack +=1;
+				}
+				else
+				{
+					winStack +=1;
+				}
+				if(winStack == STACK_PER_DAY/2)
+				{
+					break;
+				}
+				if(looseStack == STACK_PER_DAY/2)
+				{
+					break;
+				}
 			}
-			else
-			{
-				winStack +=1;
-			}
-			if(winStack == STACK_PER_DAY/2)
-			{
-				break;
-			}
-			if(looseStack == STACK_PER_DAY/2)
-			{
-				break;
-			}
+			System.out.println(" Winning Stack = "+winStack);
+			System.out.println(" Loose Stack = "+looseStack);
+			System.out.println("*********************************");
 		}
 	}
-	public static void main(String[] args)
-	{
-		System.out.println(" Welcome to Gambling Simulation Problem Developed by Nikhil Patil ");
+	
+		public static void main(String[] args)
+		{
+			System.out.println(" Welcome to Gambling Simulation Problem Developed by Nikhil Patil ");
 		
-		gamePlay();
+			gamePlay();
 	}
 	
 }
