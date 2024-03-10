@@ -2,6 +2,7 @@ package com.infogalaxy.gamblingsimulationproblem;
 
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class GamlingSimulation 
 {
@@ -20,6 +21,7 @@ public class GamlingSimulation
 	
 	public static void gamePlay()
 	{
+		Scanner scanner = new Scanner(System.in);
 		Random random = new Random();
 		int[] winAmount = new int[30];
 		int[] looseAmount = new int[30];
@@ -33,57 +35,62 @@ public class GamlingSimulation
 		int maxW = 0;
 		int indexL = 0;
 		int indexW = 0;
+		int choice = 'y';
 		
-		for(int i = 1; i <=20; i++)
+		do
 		{
-			System.out.println(" Day : "+i);
-			int winStack = 0;
-			int looseStack = 0;
-			System.out.println(" Day : "+(i+1));
-	
-			while(true)
+			for(int i = 0; i < 30; i++)
 			{
-//				gameStatus();
-				int playStatus = random.nextInt(9)%2;
-//				System.out.println(" Play Status = "+playStatus);
-				if(playStatus == LOOSE)
-				{
-					looseStack += 1;
-				}
-				else
-				{
-					winStack += 1;
-				}
-				if(looseStack == STACK_PER_DAY / 2)
-				{
-					looseDay++;
-					if(looseStack > winStack)
-					{
-						maxLost[i] =looseStack - winStack;
-						if(maxL < maxLost[i])
-						{
-							maxL = maxLost[i];
-							indexL = i=1;
-						}
-					}
-					break;
-				}
-				if(winStack == STACK_PER_DAY/2)
-				{
-					winDay++;
-					if(looseStack < winStack)
-					{
-						maxWin[i] = winStack - looseStack;
-					    if(maxW < maxWin[i])
-					    {
-					    	maxW = maxWin[i];
-					    	indexW = i+1;
-					    }
-					}
-					break;
-				}
+				int winStack = 0;
+				int looseStack = 0;
 				
-			}
+				System.out.println(" Day : "+(i+1));
+	
+				while(true)
+				{
+//					gameStatus();
+					int playStatus = random.nextInt(9)%2;
+//					System.out.println(" Play Status = "+playStatus);
+					if(playStatus == LOOSE)
+					{
+						looseStack += 1;
+					}
+					else
+					{
+						winStack += 1;
+					}
+					if(looseStack == STACK_PER_DAY / 2)
+					{
+						looseDay++;
+						if(looseStack > winStack)
+						{
+							maxLost[i] =looseStack - winStack;
+							if(maxL < maxLost[i])
+							{
+								maxL = maxLost[i];
+								indexL = i=1;
+							}
+						}
+						break;
+					}
+					if(winStack == STACK_PER_DAY/2)
+					{
+						winDay++;
+						if(looseStack < winStack)
+						{
+							maxWin[i] = winStack - looseStack;
+							if(maxW < maxWin[i])
+							{
+								maxW = maxWin[i];
+								indexW = i+1;
+							}
+						}
+						break;
+					}
+				
+				}
+		
+	
 			looseAmount[i] = looseStack;
 			winAmount[i] = winStack;
 			
@@ -102,6 +109,11 @@ public class GamlingSimulation
 		System.out.println(indexW + " is the Luckiest Day , Win Rs : " +maxW );
 		System.out.println(" Total Days Lost : "+looseDay);
 		System.out.println(" Total Days Win : "+winDay);
+		
+		System.out.println(" Do you Want to Continue Playing ? : (Yes/No)");
+		choice = scanner.next().charAt(0);
+		
+	}while(choice == 'y');
 	}
 	
 		public static void main(String[] args)
