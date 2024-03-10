@@ -1,5 +1,6 @@
 package com.infogalaxy.gamblingsimulationproblem;
 
+
 import java.util.Random;
 
 public class GamlingSimulation 
@@ -20,11 +21,25 @@ public class GamlingSimulation
 	public static void gamePlay()
 	{
 		Random random = new Random();
+		int[] winAmount = new int[30];
+		int[] looseAmount = new int[30];
+		int [] maxLost = new int[30];
+		int [] maxWin = new int[30];
+		
+		
+		int winDay = 0;
+		int looseDay = 0;
+		int maxL = 0;
+		int maxW = 0;
+		int indexL = 0;
+		int indexW = 0;
+		
 		for(int i = 1; i <=20; i++)
 		{
 			System.out.println(" Day : "+i);
 			int winStack = 0;
 			int looseStack = 0;
+			System.out.println(" Day : "+(i+1));
 	
 			while(true)
 			{
@@ -33,25 +48,60 @@ public class GamlingSimulation
 //				System.out.println(" Play Status = "+playStatus);
 				if(playStatus == LOOSE)
 				{
-					looseStack +=1;
+					looseStack += 1;
 				}
 				else
 				{
-					winStack +=1;
+					winStack += 1;
+				}
+				if(looseStack == STACK_PER_DAY / 2)
+				{
+					looseDay++;
+					if(looseStack > winStack)
+					{
+						maxLost[i] =looseStack - winStack;
+						if(maxL < maxLost[i])
+						{
+							maxL = maxLost[i];
+							indexL = i=1;
+						}
+					}
+					break;
 				}
 				if(winStack == STACK_PER_DAY/2)
 				{
+					winDay++;
+					if(looseStack < winStack)
+					{
+						maxWin[i] = winStack - looseStack;
+					    if(maxW < maxWin[i])
+					    {
+					    	maxW = maxWin[i];
+					    	indexW = i+1;
+					    }
+					}
 					break;
 				}
-				if(looseStack == STACK_PER_DAY/2)
-				{
-					break;
-				}
+				
 			}
+			looseAmount[i] = looseStack;
+			winAmount[i] = winStack;
+			
 			System.out.println(" Winning Stack = "+winStack);
 			System.out.println(" Loose Stack = "+looseStack);
+			
+			System.out.println(" MaxLost : " +maxLost[i]);
+			System.out.println(" MaxWon : " +maxWin[i]);
+			
+			System.out.println(" Loose Amount = "+looseAmount[i]);
+			System.out.println(" Win Amount = "+winAmount[i]);
+			
 			System.out.println("*********************************");
 		}
+		System.out.println(indexL+ " is the Unluckiest Day , Lost RS : " +maxL );
+		System.out.println(indexW + " is the Luckiest Day , Win Rs : " +maxW );
+		System.out.println(" Total Days Lost : "+looseDay);
+		System.out.println(" Total Days Win : "+winDay);
 	}
 	
 		public static void main(String[] args)
@@ -59,6 +109,6 @@ public class GamlingSimulation
 			System.out.println(" Welcome to Gambling Simulation Problem Developed by Nikhil Patil ");
 		
 			gamePlay();
-	}
+		}
 	
 }
